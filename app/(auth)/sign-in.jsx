@@ -7,6 +7,7 @@ import TextBox from '../../components/TextBox'
 import CustomButton from '../../components/CustomButton'
 import { Link, router } from 'expo-router'
 import { getCurrentUser, signIn } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalContext'
 
 
 
@@ -16,7 +17,6 @@ const SignIn = () => {
     email: '',
     password: ''
   });
-
 
   const { setUser, setIsLogedIn } = useGlobalContext();
 

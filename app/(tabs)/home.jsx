@@ -10,8 +10,11 @@ import EmptyState from '../../components/EmptyState'
 import { getAllVideos, getLatestPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/UseAppwrite'
 import VideoCard from '../../components/VideoCard'
+import { useGlobalContext } from '../../context/GlobalContext'
 
 const Home = () => {
+
+  const { user } = useGlobalContext();
 
   const { data: posts, isLoading, refetch } = useAppwrite(getAllVideos);
 
@@ -41,11 +44,11 @@ const Home = () => {
 
               <View>
                 <Text className='text-sm font-pmedium text-gray-100'>
-                  Welcome back
+                  Welcome back,
                 </Text>
 
                 <Text className='text-2xl font-psemibold text-white'>
-                  stackfloat
+                  {user.username}
                 </Text>
               </View>
 

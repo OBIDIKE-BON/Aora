@@ -1,10 +1,9 @@
-import { router, useLocalSearchParams } from 'expo-router';
-import { View, Text, FlatList, TouchableOpacity, Image, Alert } from 'react-native'
-import React, { useEffect } from 'react'
+import { router } from 'expo-router';
+import { View, FlatList, TouchableOpacity, Image, Alert } from 'react-native'
+import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 
-import SearchBox from '../../components/SearchBox'
 import EmptyState from '../../components/EmptyState'
 import { getUserPosts, signOut } from '../../lib/appwrite'
 import useAppwrite from '../../lib/UseAppwrite'
@@ -38,10 +37,6 @@ const Profile = () => {
       },
     ]);
   }
-
-  // useEffect(() => {
-  //   refetch();
-  // }, [query])
 
   return (
     <SafeAreaView className='bg-primary h-full'>
@@ -81,7 +76,7 @@ const Profile = () => {
               titleStyles='text-lg '
             />
 
-            <View className='mt-5 flex-row'>
+            <View className='mt-1 flex-row'>
 
               <InfoBox
                 title={posts.length}
