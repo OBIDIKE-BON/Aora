@@ -13,6 +13,7 @@ const useAppwrite = (fn) => {
 
     try {
       const response = await fn();
+
       setdata(response);
     } catch (error) {
       Alert.alert('Error', error.message);

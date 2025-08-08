@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, Image, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -9,9 +9,14 @@ import { ResizeMode, Video } from 'expo-av'
 import RequiredTitle from '../../components/RequiredTitle'
 import CustomButton from '../../components/CustomButton'
 import * as DocumentPicker from 'expo-document-picker'
+import { router } from 'expo-router'
+import { createPost } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalContext'
+import * as ImagePicker from 'expo-image-picker'
 
 const Create = () => {
 
+  const { user } = useGlobalContext();
   const [isUpLoading, setisUpLoading] = useState(false);
 
   const [form, setform] = useState({
@@ -22,14 +27,48 @@ const Create = () => {
   });
 
   const openPicker = async (mimeType) => {
-    const result = DocumentPicker.getDocumentAsync({
-      type: mimeType,
-    })
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: mimeType[0].includes("image") ? "Images" : "Videos",
+    });
+
+    if (!result.canceled) {
+      if (mimeType[0].includes('image')) {
+        setform({ ...form, thumbnail: result.assets[0] })
+      } else if (mimeType[0].includes('video')) {
+        setform({ ...form, video: result.assets[0] })
+      } else {
+        Alert.alert('Invalid file', 'File must be a video(mp4, gif) or image(jpg, png)')
+      }
+    }
+
   }
 
-  const submit = () => {
+  const submit = async () => {
+    if (!form.title || !form.video || !form.thumbnail || !form.prompt) {
+      Alert.alert('Empty field(s)', 'All fields are required, fill out the form to continue.');
+    } else {
+      setisUpLoading(true);
 
-  }
+      try {
+
+        const post = await createPost({ ...form, userId: user.$id });
+
+        Alert.alert('Success', 'Post uploaded successfully');
+        router.push('/home')
+
+      } catch (error) {
+        Alert.alert('Error', error.message);
+      } finally {
+        setisUpLoading(false);
+        setform({
+          title: '',
+          video: null,
+          thumbnail: null,
+          prompt: '',
+        })
+      }
+    }
+  };
 
   return (
     <SafeAreaView className='bg-primary h-full'>
@@ -71,7 +110,7 @@ const Create = () => {
                 resizeMode={ResizeMode.COVER}
                 className='w-full h-64 rounded-2xl'
                 useNativeControls
-                isLooping
+                isLooping={false}
               />
             ) : (
               <View className='w-full h-40 px-4 bg-black-100 rounded-2xl justify-center border-2 border-black-200 items-center'>

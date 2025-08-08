@@ -46,6 +46,7 @@ const SignIn = () => {
 
   return (
     <SafeAreaView className='bg-primary h-full'>
+      {console.log('came to sign-in')}
       <ScrollView>
         <View className='w-full justify-center min-h-[80vh] px-4 my-6'>
           <Image

@@ -43,7 +43,7 @@ const VideoCard = ({ post: { title, thumbnail, video, creator: { username, avata
           className="w-full h-60 rounded-xl mt-3"
           resizeMode={ResizeMode.CONTAIN}
           useNativeControls
-          shouldPlay
+          shouldPlay={true}
           onPlaybackStatusUpdate={(status) => {
             if (status.didJustFinish) {
               setPlay(false);

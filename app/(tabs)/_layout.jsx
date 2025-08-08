@@ -19,8 +19,8 @@ const TabIcon = ({ icon, color, name, focused }) => {
         className='h-6 w-6'
       />
       <Text 
-        className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}
-        style={{ color: color }}  
+        className={`${focused ? 'font-pbold' : 'font-pregular'} text-xs`}
+        style={{ color: color }} 
       >
         {name}
       </Text>

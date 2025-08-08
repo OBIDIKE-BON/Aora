@@ -19,7 +19,7 @@ const Profile = () => {
     () => getUserPosts(user.$id)
   );
 
-  const logout = () => {
+  const logout = async () => {
     Alert.alert(
       'Confirm Logout', 'Are you sure you want to sign out?', [
       {
@@ -32,6 +32,7 @@ const Profile = () => {
           await signOut();
           setUser(null);
           setIsLogedIn(false);
+          console.log('session ended');
           router.replace('/sign-in')
         }
       },

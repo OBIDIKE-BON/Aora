@@ -11,6 +11,7 @@ import { getAllVideos, getLatestPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/UseAppwrite'
 import VideoCard from '../../components/VideoCard'
 import { useGlobalContext } from '../../context/GlobalContext'
+import { router } from 'expo-router'
 
 const Home = () => {
 
@@ -30,6 +31,7 @@ const Home = () => {
 
   return (
     <SafeAreaView className='bg-primary h-full'>
+      { console.log('came home') }
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
@@ -48,7 +50,7 @@ const Home = () => {
                 </Text>
 
                 <Text className='text-2xl font-psemibold text-white'>
-                  {user.username}
+                  {user?.username}
                 </Text>
               </View>
 
@@ -81,7 +83,7 @@ const Home = () => {
           />
         )}
 
-        refreshControle={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
 
       />
       <StatusBar backgroundColor='#161622' style='light' />
@@ -89,4 +91,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;
